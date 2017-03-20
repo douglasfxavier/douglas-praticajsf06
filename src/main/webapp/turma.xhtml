@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:metadata>
+	<f:event type="preRenderView" listener="#{turmasBean.carregarAlunos}"/>
+	<f:viewParam name="turma_id" value="#{turmasBean.turma_id}" />
+</f:metadata>  
+<h:head>
+	<link href="resources/css/bootstrap.css" rel="stylesheet" />
+	<title>Turmas Webapp</title>
+</h:head>
+
+<h:body>
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Turmas</h1>
+			<p>Cadastro de turma e alunos</p>
+		</div>
+		<div class="main-page">
+			<h:form>
+				<h:outputLabel value="Matrícula" for="matricula" />
+				<h:inputText id="matricula" value="#{turmasBean.matricula}" />
+				<h:outputLabel value="Nome do aluno" for="nomeAluno" />
+				<h:inputText id="nomeAluno" value="#{turmasBean.nomeAluno}" />
+				<h:commandButton value="Salvar" action="#{turmasBean.inserirAluno}"/>
+				
+				<h:dataTable var="turma" value="#{turmasBean.turmas}" 
+				rendered="#{not empty turmasBean.alunos}"
+				styleClass="table table-striped table-hover">
+
+				<h:column>
+					<f:facet name="header">Matricula</f:facet>
+					<h:outputText value="#{aluno.matricula}" />
+				</h:column>
+				
+				<h:column>
+						<f:facet name="header">Nome</f:facet>
+						<h:outputText value="#{aluno.nome}" />
+				</h:column>
+				
+				<h:column>
+					<h:commandButton value="Excluir" aciotn="#{turmasBean.excluirAluno}"/>
+				</h:column>
+
+			</h:dataTable>
+			</h:form>
+		</div>
+	</div>
+</h:body>
+</html>
