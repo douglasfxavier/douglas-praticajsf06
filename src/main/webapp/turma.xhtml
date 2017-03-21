@@ -5,7 +5,7 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:metadata>
 	<f:event type="preRenderView" listener="#{turmasBean.carregarAlunos}"/>
-	<f:viewParam name="turma_id" value="#{turmasBean.turma_id}" />
+	<f:viewParam name="id" value="#{turmasBean.id}" />
 </f:metadata>  
 <h:head>
 	<link href="resources/css/bootstrap.css" rel="stylesheet" />
@@ -13,6 +13,7 @@
 </h:head>
 
 <h:body>
+	#{turmasBean.unloadFlash()}
 	<div class="container">
 		<div class="jumbotron">
 			<h1>Turmas</h1>
@@ -20,13 +21,16 @@
 		</div>
 		<div class="main-page">
 			<h:form>
-				<h:outputLabel value="Matrícula" for="matricula" />
-				<h:inputText id="matricula" value="#{turmasBean.matricula}" />
-				<h:outputLabel value="Nome do aluno" for="nomeAluno" />
-				<h:inputText id="nomeAluno" value="#{turmasBean.nomeAluno}" />
-				<h:commandButton value="Salvar" action="#{turmasBean.inserirAluno}"/>
-				
-				<h:dataTable var="turma" value="#{turmasBean.turmas}" 
+				<h:panelGrid columns="5" cellpadding="1" width="60%">
+					<h:outputLabel value="Matrícula" for="matricula" />
+					<h:inputText id="matricula" value="#{turmasBean.matricula}" />
+					<h:outputLabel value="Nome do aluno" for="nomeAluno" />
+					<h:inputText id="nomeAluno" value="#{turmasBean.nomeAluno}" />
+					<h:commandButton value="Salvar" action="#{turmasBean.cadastrarAluno}"/>
+				</h:panelGrid>
+				<h:commandButton actionListener="#{turmasBean.listarAlunos}"
+					value="Atualizar" rendered="#{not empty turmasBean.alunos}"/>	
+				<h:dataTable var="aluno" value="#{turmasBean.alunos}" 
 				rendered="#{not empty turmasBean.alunos}"
 				styleClass="table table-striped table-hover">
 
@@ -41,7 +45,7 @@
 				</h:column>
 				
 				<h:column>
-					<h:commandButton value="Excluir" aciotn="#{turmasBean.excluirAluno}"/>
+					<h:commandButton value="Excluir" aciotn="#{turmasBean.excluirAluno(aluno)}"/>
 				</h:column>
 
 			</h:dataTable>

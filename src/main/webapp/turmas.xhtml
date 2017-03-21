@@ -20,11 +20,13 @@
 		</div>
 		<div class="main-page">
 		<h:form>
-			<h:outputLabel value="Nome da turma:" for="nomeTurma" />
-			<h:inputText id="nomeTurma" value="#{turmasBean.nomeTurma}" />
-			<h:outputLabel value="Data de criação:" for="dataTurma" />
-			<h:inputText id="dataTurma" value="#{turmasBean.dataTurma}" converter="javax.faces.DateTime"/>
-			<h:commandButton value="Salvar" action="#{turmasBean.inserirTurma}"/>
+			<h:panelGrid columns="5" cellpadding="1" width="60%">
+				<h:outputLabel value="Nome da turma" for="nomeTurma" />
+				<h:inputText id="nomeTurma" value="#{turmasBean.nomeTurma}" />
+				<h:outputLabel value="Data de criação" for="dataTurma" />
+				<h:inputText id="dataTurma" value="#{turmasBean.dataTurma}" converter="javax.faces.DateTime"/>
+				<h:commandButton value="Salvar" action="#{turmasBean.cadastrarTurma}"/>
+			</h:panelGrid>	
 		</h:form>
 		<h:form>
 		<h:commandButton actionListener="#{turmasBean.listarTurmas}"
@@ -39,7 +41,7 @@
 
 				<h:column>
 					<f:facet name="header">Nome</f:facet>
-					<h:commandLink value="#{turma.nome}" id="linkTurma" action="turma?faces-redirect=true" />
+					<h:commandLink value="#{turma.nome}" id="linkTurma" action="#{turmasBean.selecionarTurma(turma)}" />
 				</h:column>
 				
 				<h:column>
@@ -55,7 +57,7 @@
 				</h:column>
 				
 				<h:column>
-					<h:commandButton value="Excluir" aciotn="#{turmasBean.excluirTurma}"/>
+					<h:commandButton value="Excluir" aciotn="#{turmasBean.excluirTurma(turma)}"/>
 				</h:column>
 
 			</h:dataTable>
