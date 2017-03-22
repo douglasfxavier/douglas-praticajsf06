@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:metadata>
+	<f:event type="preRenderView" listener="#{turmasBean.carregarAlunos}"/>
+	<f:viewParam name="id" value="#{turmasBean.id}" />
+</f:metadata>  
+<h:head>
+	<link href="resources/css/bootstrap.css" rel="stylesheet" />
+	<title>Turmas Webapp</title>
+</h:head>
+
+<h:body>
+
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Turma:</h1>
+			<h2>#{turmasBean.turma.nome}</h2>
+		</div>
+		<div>
+			<h:form style="text-align:right">
+				<h:commandLink class="btn btn-link" value="Voltar para turmas" action="turmas?faces-redirect=true"></h:commandLink>
+			</h:form>
+		</div>
+		<div class="main-page">
+			<div class="table-bordered">
+				<h:form class="container-fluid">
+					<h3>Cadastrar aluno em turma</h3>
+					<h:panelGrid columns="5" cellpadding="1" width="60%">
+						<h:outputLabel value="Matrícula" for="matricula" />
+						<h:inputText id="matricula" value="#{turmasBean.matricula}" />
+						<h:outputLabel value="Nome do aluno" for="nomeAluno" />
+						<h:inputText id="nomeAluno" value="#{turmasBean.nomeAluno}" />
+						<h:commandButton class="btn btn-default" value="Cadastrar" action="#{turmasBean.cadastrarAluno}"/>
+					</h:panelGrid>
+				</h:form>
+				<br></br>
+			</div>
+			<br></br>
+			<div>
+				<h:form>
+					<h:commandButton class="btn btn-default" actionListener="#{turmasBean.listarAlunos}"
+						value="Atualizar" rendered="#{not empty turmasBean.alunos}"/>	
+					<h:dataTable var="aluno" value="#{turmasBean.alunos}" 
+					rendered="#{not empty turmasBean.alunos}"
+					styleClass="table table-striped table-hover">
+	
+						<h:column>
+							<f:facet name="header">Matricula</f:facet>
+							<h:outputText value="#{aluno.matricula}" />
+						</h:column>
+						
+						<h:column>
+								<f:facet name="header">Nome</f:facet>
+								<h:outputText value="#{aluno.nome}" />
+						</h:column>
+						
+						<h:column>
+							<h:commandButton class="btn btn-default" value="Excluir" action="#{turmasBean.excluirAluno(aluno)}"/>
+						</h:column>
+					</h:dataTable>
+				</h:form>
+			</div>	
+		</div>
+	</div>
+</h:body>
+</html>
